@@ -13,18 +13,18 @@ from trafficgenerator.tgn_utils import TgnError, is_true
 from trafficgenerator.tgn_tcl import build_obj_ref_list
 from trafficgenerator.trafficgenerator import TrafficGenerator
 
-from ixn_object import IxnObject
-from ixn_port import IxnPort
-from ixn_traffic import IxnTrafficItem, IxnL23TrafficItem
-from ixn_protocol import (IxnBgpRouter, IxnOspfRouter, IxnOspfV3Router, IxnBgpRouteRange, IxnOspfRouteRange,
+from .ixn_object import IxnObject
+from .ixn_port import IxnPort
+from .ixn_traffic import IxnTrafficItem, IxnL23TrafficItem
+from .ixn_protocol import (IxnBgpRouter, IxnOspfRouter, IxnOspfV3Router, IxnBgpRouteRange, IxnOspfRouteRange,
                           IxnPimsmRouter, IxnIgmpHost, IxnIgmpQuerier, IxnPimsmSource, IxnStpBridge, IxnOpenFlowDevice,
                           IxnLacp, IxnIsisRouter, IxnIsisRouteRange, IxnLdpRouter, IxnLdpRouteRange)
-from ixn_interface import IxnInterface, IxnInterfaceL3
-from ixn_topology import IxnTopology, IxnDeviceGroup, IxnNgpfEthernet, IxnNgpfIpv4
-from ixn_statistics_view import IxnStatisticsView
-from ixn_root import IxnRoot
-from ixn_protocol_stack import IxnRange
-from ixn_hw import IxnHw, IxnChassis
+from .ixn_interface import IxnInterface, IxnInterfaceL3
+from .ixn_topology import IxnTopology, IxnDeviceGroup, IxnNgpfEthernet, IxnNgpfIpv4
+from .ixn_statistics_view import IxnStatisticsView
+from .ixn_root import IxnRoot
+from .ixn_protocol_stack import IxnRange
+from .ixn_hw import IxnHw, IxnChassis
 
 
 TYPE_2_OBJECT = {'availableHardware': IxnHw,

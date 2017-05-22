@@ -33,22 +33,22 @@ class IxnTestOffline(IxnTestBase):
 
         root.get_children('vport')
         port1_obj = root.get_object_by_name('Port 1')
-        print "Port1 object reference = ", port1_obj.obj_ref()
-        print "Port1 name = ", port1_obj.obj_name()
-        print 'Ports = ', root.get_objects_by_type('vport')
-        print 'Port 1 all attributes: ', port1_obj.get_attributes()
-        print 'Port 1 some attributes: ', port1_obj.get_attributes('state', 'name')
-        print 'Port 1 state: ' + port1_obj.get_attribute('state')
+        print("Port1 object reference = ", port1_obj.obj_ref())
+        print("Port1 name = ", port1_obj.obj_name())
+        print('Ports = ', root.get_objects_by_type('vport'))
+        print('Port 1 all attributes: ', port1_obj.get_attributes())
+        print('Port 1 some attributes: ', port1_obj.get_attributes('state', 'name'))
+        print('Port 1 state: ' + port1_obj.get_attribute('state'))
 
         for ixn_port in root.get_objects_by_type('vport'):
             for ixn_int in ixn_port.get_children('interface'):
-                print ixn_int.obj_name(), ' = ', ixn_int.obj_ref()
+                print(ixn_int.obj_name(), ' = ', ixn_int.obj_ref())
                 for ixn_ipv4 in ixn_int.get_children('ipv4'):
-                    print ixn_ipv4.obj_name(), ' = ', ixn_ipv4.obj_ref()
+                    print(ixn_ipv4.obj_name(), ' = ', ixn_ipv4.obj_ref())
 
         for ixn_port in root.get_objects_by_type('vport'):
             for ixn_obj in ixn_port.get_children():
-                print ixn_obj.obj_name(), ' = ', ixn_obj.obj_ref()
+                print(ixn_obj.obj_name(), ' = ', ixn_obj.obj_ref())
 
         vports = root.get_objects_by_type('vport')
         assert(len(vports) == 2)
@@ -65,19 +65,19 @@ class IxnTestOffline(IxnTestBase):
 
         ports = root.get_ports()
         assert(len(ports) == 2)
-        for port in ports.values():
+        for port in list(ports.values()):
             assert(len(port.get_interfaces()) == 1)
 
         tis = root.get_traffic_items()
         assert(len(tis) == 2)
-        for ti in tis.values():
+        for ti in list(tis.values()):
             assert(len(ti.get_flow_groups()) == 2)
 
         self._load_config(path.join(path.dirname(__file__), 'configs/ngpf_config.ixncfg'))
 
         topologies = root.get_topologies()
         assert(len(topologies) == 2)
-        for topology in topologies.values():
+        for topology in list(topologies.values()):
             assert(len(topology.get_device_groups()) == 1)
 
     def testBasicConfig(self):
@@ -92,20 +92,20 @@ class IxnTestOffline(IxnTestBase):
         for ixn_port in ixn_ports:
             assert(len(ixn_ports[ixn_port]) == num_ints)
 
-        ixn_protocols = ixn_ports.keys()[0].get_child_static('protocols')
+        ixn_protocols = list(ixn_ports.keys())[0].get_child_static('protocols')
         ixn_bgp = ixn_protocols.get_child_static('bgp')
         ixn_bgp.set_attributes(enabled=True)
 
         ixn_ipv4_neighbor = IxnObject(parent=ixn_bgp, objType='neighborRange')
         ixn_ipv4_neighbor.set_attributes(bgpId='1.1.1.1')
-        ixn_ipv4_neighbor.set_attributes(interfaces=ixn_ports.values()[0][0].obj_ref())
+        ixn_ipv4_neighbor.set_attributes(interfaces=list(ixn_ports.values())[0][0].obj_ref())
         ixn_ipv4_neighbor.set_attributes(localIpAddress='0.0.0.0')
 
         ixn_ti = IxnL23TrafficItem(name='One interface')
         ixn_ti.set_attributes(trafficType='ipv4')
         ixn_ti_es = IxnObject(parent=ixn_ti, objType='endpointSet')
-        sources = ixn_ports.keys()[0].get_objects_by_type('interface')[0].obj_ref()
-        destinations = ixn_ports.keys()[1].get_objects_by_type('interface')[0].obj_ref()
+        sources = list(ixn_ports.keys())[0].get_objects_by_type('interface')[0].obj_ref()
+        destinations = list(ixn_ports.keys())[1].get_objects_by_type('interface')[0].obj_ref()
         ixn_ti_es.set_attributes(sources=sources, destinations=destinations)
 
         self._save_config()
@@ -123,13 +123,13 @@ class IxnTestOffline(IxnTestBase):
         ixn_ti.set_attributes(trafficType='ipv4')
 
         ixn_ti_es = IxnObject(parent=ixn_ti, objType='endpointSet')
-        sources = build_obj_ref_list(ixn_ports.values()[0])
-        destinations = build_obj_ref_list(ixn_ports.values()[1])
+        sources = build_obj_ref_list(list(ixn_ports.values())[0])
+        destinations = build_obj_ref_list(list(ixn_ports.values())[1])
         ixn_ti_es.set_attributes(sources=sources, destinations=destinations)
 
         ixn_ti_es = IxnObject(parent=ixn_ti, objType='endpointSet')
-        sources = build_obj_ref_list(ixn_ports.values()[1])
-        destinations = build_obj_ref_list(ixn_ports.values()[0])
+        sources = build_obj_ref_list(list(ixn_ports.values())[1])
+        destinations = build_obj_ref_list(list(ixn_ports.values())[0])
         ixn_ti_es.set_attributes(sources=sources, destinations=destinations)
 
         ixn_ti = IxnL23TrafficItem(name='Raw TI with two EPs')
@@ -137,8 +137,8 @@ class IxnTestOffline(IxnTestBase):
 
         ixn_ti_es = IxnObject(parent=ixn_ti, objType='endpointSet')
         ixn_ti_es.api.commit()
-        sources = ixn_ports.keys()[0].obj_ref() + '/protocols'
-        destinations = ixn_ports.keys()[1].obj_ref() + '/protocols'
+        sources = list(ixn_ports.keys())[0].obj_ref() + '/protocols'
+        destinations = list(ixn_ports.keys())[1].obj_ref() + '/protocols'
         ixn_ti_es.set_attributes(sources=sources, destinations=destinations)
         ixn_ti_es.api.commit()
         ixn_ti_hls = IxnObject(parent=ixn_ti, objType='highLevelStream')
@@ -146,8 +146,8 @@ class IxnTestOffline(IxnTestBase):
 
         ixn_ti_es = IxnObject(parent=ixn_ti, objType='endpointSet')
         ixn_ti_es.api.commit()
-        sources = ixn_ports.keys()[1].obj_ref() + '/protocols'
-        destinations = ixn_ports.keys()[0].obj_ref() + '/protocols'
+        sources = list(ixn_ports.keys())[1].obj_ref() + '/protocols'
+        destinations = list(ixn_ports.keys())[0].obj_ref() + '/protocols'
         ixn_ti_es.set_attributes(sources=sources, destinations=destinations)
         ixn_ti_es.api.commit()
         ixn_ti_hls = IxnObject(parent=ixn_ti, objType='highLevelStream')
@@ -168,7 +168,7 @@ class IxnTestOffline(IxnTestBase):
         for ixn_port in ixn_ports:
             assert(len(ixn_ports[ixn_port]) == num_ints)
 
-        for topo_num, ixn_port in zip(range(1, num_ports + 1), ixn_ports):
+        for topo_num, ixn_port in zip(list(range(1, num_ports + 1)), ixn_ports):
             topo_name = 'Topo {}'.format(topo_num)
             self.logger.info('Create Topo "{}"'.format(topo_name))
             ixn_topo = IxnTopology(name=topo_name)

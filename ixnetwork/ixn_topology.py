@@ -7,7 +7,7 @@ import time
 
 from trafficgenerator.tgn_utils import TgnError
 
-from ixn_object import IxnObject
+from .ixn_object import IxnObject
 
 
 class IxnTopologyBaseClass(IxnObject):

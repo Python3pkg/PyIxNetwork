@@ -90,5 +90,5 @@ class IxnPythonWrapper(object):
         return self.ixn.remapIds(objRef)[0]
 
     def _get_args_list(self, **attributes):
-        keys = ['-' + attribute for attribute in attributes.keys()]
-        return itertools.chain.from_iterable(zip(keys, attributes.values()))
+        keys = ['-' + attribute for attribute in list(attributes.keys())]
+        return itertools.chain.from_iterable(list(zip(keys, list(attributes.values()))))

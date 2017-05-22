@@ -9,8 +9,8 @@ from itertools import chain
 
 from trafficgenerator.tgn_object import TgnL3
 
-from ixn_object import IxnObject
-from ixn_interface import filter_ints_based_on_vlan
+from .ixn_object import IxnObject
+from .ixn_interface import filter_ints_based_on_vlan
 
 
 class IxnProtocol(IxnObject):
@@ -21,7 +21,7 @@ class IxnProtocol(IxnObject):
 
     @classmethod
     def get_protocols_with_int(cls, ixn_int):
-        return list(p for p in cls.get_objects_of_class() if ixn_int in p.ixn_ints.values())
+        return list(p for p in cls.get_objects_of_class() if ixn_int in list(p.ixn_ints.values()))
 
     @classmethod
     def get_protocols_with_port(cls, ixn_port, l3, vlan=None):

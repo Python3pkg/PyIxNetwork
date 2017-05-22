@@ -50,7 +50,7 @@ class IxnStatisticsView(object):
         :returns: all statistics values for the requested object.
         """
 
-        return dict(zip(self.captions, self.statistics[obj_name]))
+        return dict(list(zip(self.captions, self.statistics[obj_name])))
 
     def get_stats(self, stat_name):
         """
@@ -58,7 +58,7 @@ class IxnStatisticsView(object):
         :returns: all values of the requested statistic for all objects.
         """
 
-        return [self.get_stat(r, stat_name) for r in self.statistics.keys()]
+        return [self.get_stat(r, stat_name) for r in list(self.statistics.keys())]
 
     def get_stat(self, obj_name, stat_name):
         """

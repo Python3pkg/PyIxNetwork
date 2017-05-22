@@ -10,7 +10,7 @@ import time
 from trafficgenerator.tgn_utils import is_local_host
 from trafficgenerator.tgn_utils import TgnError
 
-from ixn_object import IxnObject
+from .ixn_object import IxnObject
 
 
 def get_port(obj_ref):
